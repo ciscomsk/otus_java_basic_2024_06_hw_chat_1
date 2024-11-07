@@ -33,6 +33,9 @@ public class ClientHandler {
                         if (message.startsWith("/exit")) {
                             sendMessage("/exitok");
                             break;
+                        } else if (message.startsWith("/w")) {
+                            String[] parsedMsg = message.split("\\s+", 3);
+                            sendPrivateMessage(parsedMsg[1], parsedMsg[2]);
                         }
                     } else {
                         server.broadcastMessage(username + ": " + message);
@@ -58,8 +61,25 @@ public class ClientHandler {
         }
     }
 
+    public void sendPrivateMessage(String username, String message) {
+        ClientHandler handler = server.getHandlerByName(username);
+        if (handler != null) {
+            try {
+                handler.out.writeUTF(username + " [private]: " + message);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                out.writeUTF("user with name" + username + " does not exist");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public void disconnect() {
-        server.unsubscribe(this);
+        server.unsubscribe(username);
 
         try {
             in.close();
