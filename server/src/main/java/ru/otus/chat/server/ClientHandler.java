@@ -70,11 +70,7 @@ public class ClientHandler {
                 e.printStackTrace();
             }
         } else {
-            try {
-                out.writeUTF("user with name" + username + " does not exist");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            sendMessage("user with name " + username + " does not exist");
         }
     }
 
