@@ -35,8 +35,12 @@ public class InMemoryAuthenticationProvider implements AuthenticationProvider {
     public synchronized boolean isAuthenticated(ClientHandler clientHandler, String login, String password) {
         String authName = getUsernameByLoginAndPassword(login, password);
         if (authName == null) {
-            clientHandler.sendMessage("");
+            clientHandler.sendMessage("incorrect login or password");
+            return false;
         }
+
+
+
         return false;
     }
 
