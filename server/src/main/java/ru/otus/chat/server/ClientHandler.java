@@ -66,6 +66,7 @@ public class ClientHandler {
         if (handler != null) {
             try {
                 handler.out.writeUTF(username + " [private]: " + message);
+                sendMessage("[private " + username + "]: " + message);
             } catch (IOException e) {
                 e.printStackTrace();
             }
